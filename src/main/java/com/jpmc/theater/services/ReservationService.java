@@ -25,9 +25,16 @@ public class ReservationService {
     }
 
     public Reservation reserve(final String customerId, final String showingId, final int howManyTickets) {
+        // Validate that a customer exists
         customerService.getCustomer(customerId);
+
+        // Load the showing record
         final Showing showing = showingService.getShowing(showingId);
+
+        // Load the movie record
         final Movie movie = movieService.getMovie(showing.getMovieId());
+
+        // Calculate the total fee (including discounts if applicable)
         final double totalFee = calculateFee(showing, movie, howManyTickets);
         return Reservation.builder()
                 .customerId(customerId)

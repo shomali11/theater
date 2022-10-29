@@ -76,7 +76,7 @@ You will notice a few things:
 - The models use `id`s to be able to represent each "record"
 
 Notice that in the `Showing` object, I introduced a new "id" field. 
-I did not want to use the `sequence` because that represents the sequence of showings within a single day.
+I did not want to use the `sequence` as an "id" because that represents the sequence of showings within a single day.
 
 Similarly, I introduced a new "id" in the `Movie` object and opted not to use the `title` as an id.
 Moreover, I introduced an enum `MovieCode` to make it easier to interact with `SPECIAL` movies.
@@ -94,12 +94,11 @@ private static final LocalDateProvider instance = new LocalDateProvider();
 
 and removed the `singleton()` method while keeping the `currentDate()` one.
 
-The `Theater` java class. I moved most of the logic there and 
+As for the `Theater` java class. I removed most of the logic there and 
 converted it to the main entry point of the application.
 
-All it does is setup the app, dependency injections, push some data into the services 
-which will call the dao classes to store in their databases.
-
+All it does is setup the app, the dependency injections, push some data into the services 
+which will call the dao classes to store in their databases. 
 Finally, it prints/displays the schedule in both text and json formats:
 
 Text:
@@ -195,18 +194,20 @@ JSON:
 ```
 
 *I could have left the values in the JSON response in its raw values 
-but I opted to reuse the same date and time string formatting for readability*
+but I opted to reuse the same date and time string formatting for readability purposes*
 
-Finally `test`, is where all the tests exist. Given the rewrite of the entire app, 
-the tests were rewritten completely too.
-
-The tests are consistent, with predictable inputs and outputs along with a high code coverage *(100% for `dao` and `services` )*
+Finally the `test`, is where all the tests exist. Given the rewrite of the entire app, 
+the tests were rewritten completely too. 
+The tests are consistent, with predictable inputs and outputs along with a high code coverage 
+*(100% for `dao` and `services` )*
 
 You are welcome to check out the various tests, but the `ReservationServiceTests` 
 is most likely the most interesting one. It contains logic that test all various combinations 
 of valid, invalid and discount options
 
-**You will notice that instead of passing a sequence I am passing the `Showing` id**
+**You will notice that instead of passing a sequence I am passing the `Showing` id. 
+This is due to my attempt to working with the various objects with their IDs and 
+treating them as database records**
 
 Another good one is the `ScheduleServiceTests`, as it shows how the scheduling is created.
 

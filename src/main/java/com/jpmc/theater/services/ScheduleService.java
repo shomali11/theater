@@ -27,7 +27,10 @@ public class ScheduleService {
     }
 
     public Schedule getSchedule(final LocalDate currentDate) {
+        // Retrieve all the showings on a specific day
         final Collection<Showing> showings = showingService.getShowings(currentDate);
+
+        // Cache the showings' movies
         final Map<String, Movie> movieMap = getMovieMap(showings);
 
         final List<MovieShowing> movieShowingList = new ArrayList<>();
